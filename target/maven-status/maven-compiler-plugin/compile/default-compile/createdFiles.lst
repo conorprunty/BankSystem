@@ -1,0 +1,6 @@
+com/groupa/banksystem/Customer.class
+com/groupa/banksystem/service/AbstractFacade.class
+com/groupa/banksystem/service/AccountFacadeREST.class
+com/groupa/banksystem/CustomerService.class
+com/groupa/banksystem/service/CustomerFacadeREST.class
+com/groupa/banksystem/Account.class
