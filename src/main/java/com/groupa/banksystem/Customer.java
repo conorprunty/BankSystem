@@ -18,20 +18,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author conorprunty
  */
 @Entity
-@Table(name = "customer")
+@Table
 @XmlRootElement
 public class Customer implements Serializable {
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private String address;
-
     private String email;
-
     private String name;
+    private String password;
 
     public int getId() {
         return id;
@@ -73,9 +71,7 @@ public class Customer implements Serializable {
         this.password = password;
     }
 
-    private String password;
-
-    public Customer() {
-    }
+    //public Customer() {
+    //}
 
 }

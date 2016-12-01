@@ -37,7 +37,7 @@ public class CustomerService {
     }
 
     @GET
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Customer> getPlanets() {
        return allEntries();
     }
@@ -52,7 +52,7 @@ public class CustomerService {
     }
      
     @GET
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({MediaType.APPLICATION_JSON })
     @Path("{id}")
     public Customer getPlanet(@PathParam("id") int id) {
         Customer test = entityManager.find(Customer.class, id);
@@ -60,18 +60,18 @@ public class CustomerService {
     }
     
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/save")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
-    public Response save(Customer c) {
+    public Response addCustomer(Customer c) {
 
         entityManager.getTransaction().begin();
 
         entityManager.persist(c);
         entityManager.getTransaction().commit();
         
-        entityManager.close();
-        entityManager.close();
+        //entityManager.close();
+        //entityManager.close();
 
         return Response.status(200).entity(c).build();
     }
