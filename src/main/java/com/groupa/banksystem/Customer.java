@@ -6,12 +6,16 @@
 package com.groupa.banksystem;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Set;
 
 /**
  *
@@ -30,6 +34,17 @@ public class Customer implements Serializable {
     private String email;
     private String name;
     private String password;
+
+    public Customer() {
+
+    }
+
+    public Customer(String name, String address, String email, String password) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getId() {
         return id;
@@ -70,8 +85,5 @@ public class Customer implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    //public Customer() {
-    //}
 
 }
