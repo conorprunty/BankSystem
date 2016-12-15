@@ -6,71 +6,76 @@
 package com.groupa.banksystem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author conorprunty
  */
 @Entity
-@Table
-@XmlRootElement
 public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int accountId;
+    private String accountNumber;
+    private int balance;
+    private String sortcode;
+    private String accType;
+    @OneToMany
+    private Collection<Transactions> transactions = new ArrayList<>();
 
-    private String sortCode;
-    private int accountNum;
-    private Double currentBalance;
-
-    public Account() {
-
+    public int getAccountId() {
+        return accountId;
     }
 
-    public Account(String sortCode, int accountNum, Double currentBalance, int id) {
-        this.sortCode = sortCode;
-        this.accountNum = accountNum;
-        this.currentBalance = currentBalance;
-        this.id = id;
-
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setSortCode(String sortCode) {
-        this.sortCode = sortCode;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
-    public void setAccountNum(int accountNum) {
-        this.accountNum = accountNum;
+    public int getBalance() {
+        return balance;
     }
 
-    public void setCurrentBalance(Double currentBalance) {
-        this.currentBalance = currentBalance;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
-    public int getId() {
-        return id;
+    public String getSortcode() {
+        return sortcode;
     }
 
-    public String getSortCode() {
-        return sortCode;
+    public void setSortcode(String sortcode) {
+        this.sortcode = sortcode;
     }
 
-    public int getAccountNum() {
-        return accountNum;
+    public Collection<Transactions> getTransactions() {
+        return transactions;
     }
 
-    public Double getCurrentBalance() {
-        return currentBalance;
+    public void setTransactions(Collection<Transactions> transactions) {
+        this.transactions = transactions;
+    }
+
+    public String getAccType() {
+        return accType;
+    }
+
+    public void setAccType(String accType) {
+        this.accType = accType;
     }
 }
