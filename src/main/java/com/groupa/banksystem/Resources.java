@@ -121,15 +121,19 @@ public class Resources {
     @Path("/{amount}/transfer")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Account transfer(@PathParam("amount") int amount, Account a) {
+    public Account transfer(@PathParam("amount") int amount, Account a, Account b) {
         Account bank = em.find(Account.class, a.getAccountId());
-        if (bank == null) {
+        Account bank2 = em.find(Account.class, b.getAccountId());
+        if (bank == null && bank2 == null) {
 
-            Account acc = new Account();
-            acc.setBalance(a.getBalance() + amount);
+            if (bank.getBalance() > amount) {
+                bank.setBalance(a.getBalance() - amount);
+                bank2.setBalance(b.getBalance() + amount);
+            }
 
             tx.begin();
-            em.persist(acc);
+            em.persist(bank);
+            em.persist(bank2);
             tx.commit();
         }
         return a;
@@ -148,7 +152,9 @@ public class Resources {
             tr.setType("Debit");
             tr.setDate("23-12-2016");
             tr.setDescription("Amount updated");
-            tr.setBalance(a.getBalance() - amount);
+            if (bank.getBalance() > amount) {
+                tr.setBalance(a.getBalance() - amount);
+            }
 
             tx.begin();
             em.persist(tr);
