@@ -118,17 +118,18 @@ public class Resources {
 
     //transfer to existing account
     @POST
-    @Path("/{amount}/transfer")
+    @Path("/{amount}/{accountID}/transfer")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Account transfer(@PathParam("amount") int amount, Account a, Account b) {
-        Account bank = em.find(Account.class, a.getAccountId());
-        Account bank2 = em.find(Account.class, b.getAccountId());
-        if (bank == null && bank2 == null) {
+    public Account transfer(@PathParam("amount") int amount, @PathParam("accountID") int accID, int accID2) {
+        Account bank = em.find(Account.class, accID);
+        Account bank2 = em.find(Account.class, accID2);
+
+        if (bank == null & bank2 == null) {
 
             if (bank.getBalance() > amount) {
-                bank.setBalance(a.getBalance() - amount);
-                bank2.setBalance(b.getBalance() + amount);
+                bank.setBalance(bank.getBalance() - amount);
+                bank2.setBalance(bank2.getBalance() + amount);
             }
 
             tx.begin();
@@ -136,7 +137,7 @@ public class Resources {
             em.persist(bank2);
             tx.commit();
         }
-        return a;
+        return bank2;
     }
 
     //withdrawal
